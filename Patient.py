@@ -1,24 +1,40 @@
 import datetime as dt
 
 
+# FIXME: maybe don't have date and just store date as string?
+# then might need to add booleans for recert, d/c and passed fields??
+
 class Patient:
-    #FIXME: rename some fields and maybe add some fields
     name: str
     idt_date: dt.date
-    need_recertification: bool
-    dc: bool
-    passed: bool
+    recertification_date: dt.date  # date the next recert is due
+    discharge_date: dt.date  # date they're scheduled for discharge, otherwise NULL
+    date_of_passing: dt.date  # date the patient passed, otherwise NULL
     medication_plan: str
     care_plan: str
     poc_change_requests: str
     assessment_comments: str
     poc_followup: str
 
+    # TODO
     def __init__(self) -> None:
         pass
 
+    # TODO: either make this just for debugging or make string for export
     def __str__(self):
         return super().__str__()
+
+    # TODO return true if recertification date is within 2 weeks of IDT date
+    def recert_within_two_weeks(self) -> bool:
+        return False
+
+    # TODO return true if discharge_date exists
+    def scheduled_for_discharge(self) -> bool:
+        return False
+
+    # TODO return true if date_of_passing exists
+    def has_passed(self) -> bool:
+        return False
 
     def get_idt_date(self) -> dt.date:
         return self.idt_date
@@ -26,23 +42,23 @@ class Patient:
     def set_idt_date(self, new_date: dt.date) -> None:
         self.idt_date = new_date
 
-    def get_recertification_status(self) -> bool:
-        return self.need_recertification
+    def get_recertification_date(self) -> dt.date:
+        return self.recertification_date
 
-    def set_recertification_status(self, new_recert: bool) -> None:
-        self.need_recertification = new_recert
+    def set_recertification_date(self, new_recert: dt.date) -> None:
+        self.recertification_date = new_recert
 
-    def get_dc(self) -> bool:
-        return self.dc
+    def get_discharge_date(self) -> dt.date:
+        return self.discharge_date
 
-    def set_dc(self, new_dc: bool) -> None:
-        self.dc = new_dc
+    def set_discharge_date(self, new_dc: dt.date) -> None:
+        self.discharge_date = new_dc
 
-    def get_passed(self) -> bool:
-        return self.passed
+    def get_date_of_passing(self) -> dt.date:
+        return self.date_of_passing
 
-    def set_passed(self, new_passed: bool) -> None:
-        self.passed = new_passed
+    def set_date_of_passing(self, new_passed: dt.date) -> None:
+        self.date_of_passing = new_passed
 
     def get_medication_plan(self) -> str:
         return self.medication_plan
