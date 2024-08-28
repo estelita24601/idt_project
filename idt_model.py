@@ -2,7 +2,8 @@ from typing import Dict, List
 
 import pandas as pd
 
-import Patient
+from PatientRecord import *
+from Patient import Patient
 
 """
 #TODO: implementation
@@ -19,17 +20,22 @@ import Patient
 class Model:
     IDT_EXCEL_FILE: pd.ExcelFile  # for getting info FROM the file
     EXCEL_WRITER: pd.ExcelWriter  # for saving info TO the file
-    patient_dict: Dict[
-        str, List[Patient]]  # key is the date, value is list of all patients for that date
+    idt_dates_dictionary: Dict[
+        str, List[PatientRecord]
+    ]  # key is the date, value is list of all patients for that date
+    active_patients: List[Patient]
+    deceased_patients: List[Patient]
+    discharged_patients: List[Patient]
+    new_patients: List[Patient]
 
     # todo
     def __init__(self, file_path: str):
         self.IDT_EXCEL_FILE = None  # FIXME
         self.EXCEL_WRITER = None  # FIXME
-        self.patient_dict = self.__parse_excel__()
+        self.idt_dates_dictionary = self.__parse_excel__()
 
     # TODO
-    def __parse_excel__(self) -> Dict[str, List[Patient]]:
+    def __parse_excel__(self) -> Dict[str, List[PatientRecord]]:
         """
         helper to parse the excel file into a list of patients for every tab/date, and to then put those lists into a
         dictionary where the tab name/date is the key
@@ -39,13 +45,19 @@ class Model:
         patient_dict = {}
 
         for date in self.get_date_options():
-            curr_patients = self.__create_patient_list(date, excel_file[date])  # get list of patients from this date
-            patient_dict[date] = curr_patients  # add curr patients to dictionary using date as key
+            curr_patients = self.__create_patient_list(
+                date, excel_file[date]
+            )  # get list of patients from this date
+            patient_dict[date] = (
+                curr_patients  # add curr patients to dictionary using date as key
+            )
 
         return patient_dict
 
     # TODO
-    def __create_patient_list(self, date: str, date_sheet: pd.DataFrame) -> List[Patient]:
+    def __create_patient_list(
+        self, date: str, date_sheet: pd.DataFrame
+    ) -> List[PatientRecord]:
         """
         helper to create list of patients from a given date (aka given tab in the excel file)
         @param date: str name of the tab/date we're getting the patients from
@@ -55,7 +67,7 @@ class Model:
         pass
 
     # TODO
-    def __create_patient__(self, patient_info: pd.DataFrame) -> Patient:
+    def __create_patient__(self, patient_info: pd.DataFrame) -> PatientRecord:
         """
         helper to parse excel sheet info into a Patient
         @param patient_info: subset of the idt excel file with info for this specific patient
@@ -73,7 +85,7 @@ class Model:
         pass
 
     # todo
-    def get_patients(self, date: str) -> [Patient]:
+    def get_patients(self, date: str) -> [PatientRecord]:
         """
         @param date: string for the date we want to get the patients from
         @return: list of Patient objects for the given date
