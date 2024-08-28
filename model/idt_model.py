@@ -28,11 +28,11 @@ class Model:
     discharged_patients: List[Patient]
     new_patients: List[Patient]
 
-    # todo
-    def __init__(self, file_path: str):
+    def set_data_source(self, file_path: str):
         self.IDT_EXCEL_FILE = None  # FIXME
         self.EXCEL_WRITER = None  # FIXME
         self.idt_dates_dictionary = self.__parse_excel__()
+        #TODO: figure out which patients are active, discharged, etc
 
     # TODO
     def __parse_excel__(self) -> Dict[str, List[PatientRecord]]:
