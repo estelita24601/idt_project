@@ -1,4 +1,5 @@
 from typing import Dict
+import datetime as dt
 from PatientRecord import PatientRecord
 from enum import Enum
 
@@ -12,27 +13,24 @@ class Status(Enum):
 
 class Patient:
     records: Dict[
-        str, PatientRecord
-    ]  # str date as the key then patient record object as the value
+        dt.date, PatientRecord
+    ]  # idt date as the key then patient record object as the value
     name: str
     patient_status: Status
 
-    # TODO
-    def __init__():
-        pass
+    def __init__(self, patient_name):
+        self.name = patient_name
+        self.records = {}  # empty dictionary
 
-    # TODO
-    def add_record(new_record: PatientRecord) -> None:
-        pass
+    def add_record(self, new_record: PatientRecord) -> None:
+        key = new_record.get_idt_date()
+        self.records[key] = new_record
 
-    # TODO
-    def get_record(desired_date: str):
-        pass
+    def get_record(self, desired_date: dt.date):
+        return self.records[desired_date]
 
-    # TODO
-    def check_status() -> Status:
-        pass
+    def get_status(self) -> Status:
+        return self.patient_status
 
-    # TODO
-    def set_status() -> None:
-        pass
+    def set_status(self, new_status: Status) -> None:
+        self.patient_status = new_status

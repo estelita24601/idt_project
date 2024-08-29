@@ -23,16 +23,17 @@ class Model:
     idt_dates_dictionary: Dict[
         str, List[PatientRecord]
     ]  # key is the date, value is list of all patients for that date
-    active_patients: List[Patient]
-    deceased_patients: List[Patient]
-    discharged_patients: List[Patient]
-    new_patients: List[Patient]
+    all_patients: List[Patient]
+
+    # fields so we can determine which patients are new
+    most_recent_date: dt.date  # date of the newest idt records
+    current_date: dt.date  # date of the records we're currently looking at
 
     def set_data_source(self, file_path: str):
         self.IDT_EXCEL_FILE = None  # FIXME
         self.EXCEL_WRITER = None  # FIXME
         self.idt_dates_dictionary = self.__parse_excel__()
-        #TODO: figure out which patients are active, discharged, etc
+        # TODO: also set the all_patients list
 
     # TODO
     def __parse_excel__(self) -> Dict[str, List[PatientRecord]]:

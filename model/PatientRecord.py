@@ -4,6 +4,7 @@ import datetime as dt
 # FIXME: maybe don't have date and just store date as string?
 # then might need to add booleans for recert, d/c and passed fields??
 
+
 class PatientRecord:
     name: str
     idt_date: dt.date
@@ -16,21 +17,20 @@ class PatientRecord:
     assessment_comments: str
     poc_followup: str
 
-    # TODO
-    def __init__(self) -> None:
-        pass
+    def __init__(self, name: str, date: dt.date) -> None:
+        self.name = name
+        self.idt_date = date
 
     # TODO: either make this just for debugging or make string for export
     def __str__(self):
         return super().__str__()
 
     # TODO return true if recertification date is within 2 weeks of IDT date
-    def recert_within_two_weeks(self) -> bool:
-        return False
+    def recert_within_two_weeks(self, current_date: dt.date) -> bool:
+        return False  # if current_date is more than 2 weeks away from idt_date
 
-    # TODO return true if discharge_date exists
     def scheduled_for_discharge(self) -> bool:
-        return False
+        return self.discharge_date != None
 
     # TODO return true if date_of_passing exists
     def has_passed(self) -> bool:
